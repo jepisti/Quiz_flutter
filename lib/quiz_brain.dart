@@ -34,4 +34,9 @@ class QuizBrain {
   bool goQuiz() {
     return _questionOver < _questionBank.length;
   }
+
+  void reset() {
+    _questionNumber = 0;
+    _questionOver = 0;
+  }
 }
