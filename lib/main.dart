@@ -43,7 +43,7 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Widget> scoreKeeper = [];
 
-  int questionNumber = 0;
+  //int questionNumber = 0;
 
   int questionLength = quizBrain.getListLength();
 
@@ -77,7 +77,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(30.0),
             child: Text(
               //quizBrain.questionBank[questionNumber].questionText,
-              quizBrain.getQuestionText(questionNumber),
+              quizBrain.getQuestionText(),
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 25.0,
@@ -102,23 +102,13 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctAnswer =
-                    quizBrain.getQuestionAnswer(questionNumber);
+                bool correctAnswer = quizBrain.getQuestionAnswer();
 
                 setState(() {
-                  //print(questionLength);
-                  if (questionNumber == (questionLength - 1)) {
-                    checkIcon(correctAnswer, true);
-
-                    questionNumber = 0;
-                    //scoreKeeper.clear();
-                  } else {
-                    if (questionNumber == 0) scoreKeeper.clear();
-
-                    questionNumber = questionNumber + 1;
-
+                  if (quizBrain.goQuiz()) {
                     checkIcon(correctAnswer, true);
                   }
+                  quizBrain.nextQuestion();
                 });
               },
             ),
@@ -140,21 +130,14 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctAnswer =
-                    quizBrain.getQuestionAnswer(questionNumber);
+                bool correctAnswer = quizBrain.getQuestionAnswer();
 
                 setState(() {
-                  if (questionNumber == (questionLength - 1)) {
-                    checkIcon(correctAnswer, false);
-                    questionNumber = 0;
-
-                    //scoreKeeper.clear();
-                  } else {
-                    if (questionNumber == 0) scoreKeeper.clear();
-                    questionNumber = questionNumber + 1;
-
+                  //print(quizBrain.overQuiz());
+                  if (quizBrain.goQuiz()) {
                     checkIcon(correctAnswer, false);
                   }
+                  quizBrain.nextQuestion();
                 });
               },
             ),
